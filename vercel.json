@@ -12,6 +12,5 @@
       "src": "/(.*)",
       "dest": "src/server.ts"
     }
-  ],
-  "postinstall": "npx prisma generate"
+  ]
 }
