@@ -1,13 +1,11 @@
 import { Router } from "express";
 import { body } from "express-validator";
-import {
-  createTask,
-  updateTask,
-  getAllTasks,
-  deleteTask,
-} from "../controllers/task.controller";
+import { TaskController } from "../controllers/task.controller";
 
 const router = Router();
+
+const { createTask, updateTask, getAllTasks, deleteTask } =
+  new TaskController();
 
 router.post(
   "/",
