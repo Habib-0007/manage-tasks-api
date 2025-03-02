@@ -1,7 +1,6 @@
 import express, { Application } from "express";
 import cors from "cors";
 import swaggerUi from "swagger-ui-express";
-import * as swaggerDocument from "../swagger.json";
 import { errorHandler, notFoundHandler } from "./middlewares/error.middleware";
 import { TaskController } from "./controllers/task.controller";
 import {
@@ -10,8 +9,8 @@ import {
   getTaskValidation,
   deleteTaskValidation,
 } from "./validation/task.validation";
-// import fs from "fs";
 import path from "path";
+import fs from "fs";
 
 export function createApp(): Application {
   const app: Application = express();
@@ -20,24 +19,15 @@ export function createApp(): Application {
   app.use(cors({ origin: "*" }));
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
-  app.use(express.static("node_modules/swagger-ui-dist"));
 
-  // let swaggerFile = `${process.cwd()}/swagger.json`;
-
-  // let swaggerData = fs.readFileSync(swaggerFile, "utf8");
-
-  // let swaggerJSON = JSON.parse(swaggerData);
-  app.use(
-    "/api-docs",
-    express.static(path.join(__dirname, "node_modules/swagger-ui-dist"))
-  );
+  const swaggerPath = path.resolve(__dirname, "../swagger.json");
+  const swaggerDocument = JSON.parse(fs.readFileSync(swaggerPath, "utf8"));
 
   app.use(
     "/api-docs",
     swaggerUi.serve,
     swaggerUi.setup(swaggerDocument, {
-      customCssUrl:
-        "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.5/swagger-ui.min.css",
+      explorer: true,
     })
   );
 
@@ -51,6 +41,7 @@ export function createApp(): Application {
   app.put("/api/tasks/:id", updateTaskValidation, taskController.updateTask);
   app.delete("/api/tasks/:id", deleteTaskValidation, taskController.deleteTask);
 
+  // Error handlers
   app.use(notFoundHandler);
   app.use(errorHandler);
 
