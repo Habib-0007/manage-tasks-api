@@ -11,7 +11,7 @@
       "description": "Development server"
     },
     {
-      "url": "https://manage-tasks-api.vercel.app",
+      "url": "https://manage-tasks-api-ten.vercel.app",
       "description": "Production server"
     }
   ],
