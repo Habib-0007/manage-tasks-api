@@ -21,13 +21,11 @@ export function createApp(): Application {
   app.use(express.urlencoded({ extended: true }));
   app.use(express.static("node_modules/swagger-ui-dist"));
 
-    let swaggerFile = `${process.cwd()}/swagger.json`;
+  let swaggerFile = `${process.cwd()}/swagger.json`;
 
-    let swaggerData = fs.readFileSync(swaggerFile, 'utf8');
+  let swaggerData = fs.readFileSync(swaggerFile, "utf8");
 
-    let swaggerJSON = JSON.parse(swaggerData);
-
-  app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerJSON));
+  let swaggerJSON = JSON.parse(swaggerData);
 
   app.get("/", (req, res) => {
     res.json({ message: "Welcome to the Task Management API" });
@@ -41,6 +39,7 @@ export function createApp(): Application {
 
   app.use(notFoundHandler);
   app.use(errorHandler);
+  app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerJSON));
 
   return app;
 }
