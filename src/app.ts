@@ -30,6 +30,7 @@ export function createApp(): Application {
   app.get("/", (req, res) => {
     res.json({ message: "Welcome to the Task Management API" });
   });
+  app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerJSON));
 
   app.get("/api/tasks", taskController.getAllTasks);
   app.get("/api/tasks/:id", getTaskValidation, taskController.getTaskById);
@@ -39,7 +40,6 @@ export function createApp(): Application {
 
   app.use(notFoundHandler);
   app.use(errorHandler);
-  app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerJSON));
 
   return app;
 }
