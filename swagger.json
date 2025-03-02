@@ -1,6 +1,6 @@
 {
   "swaggerDefinition": {
-    "openapi": "3.0.0",
+    "myapi": "3.0.0",
     "info": {
       "title": "Task Management API",
       "description": "API for managing tasks",
@@ -365,6 +365,7 @@
           }
         }
       }
-    }
+    },
+    "apis": ["./routes/*.ts"]
   }
 }
