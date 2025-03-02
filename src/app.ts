@@ -1,7 +1,7 @@
 import express, { Application } from "express";
 import cors from "cors";
 import swaggerUi from "swagger-ui-express";
-// import * as swaggerDocument from "../swagger.json";
+import * as swaggerDocument from "../swagger.json";
 import { errorHandler, notFoundHandler } from "./middlewares/error.middleware";
 import { TaskController } from "./controllers/task.controller";
 import {
@@ -10,7 +10,8 @@ import {
   getTaskValidation,
   deleteTaskValidation,
 } from "./validation/task.validation";
-import fs from "fs";
+// import fs from "fs";
+import path from "path";
 
 export function createApp(): Application {
   const app: Application = express();
@@ -21,16 +22,28 @@ export function createApp(): Application {
   app.use(express.urlencoded({ extended: true }));
   app.use(express.static("node_modules/swagger-ui-dist"));
 
-  let swaggerFile = `${process.cwd()}/swagger.json`;
+  // let swaggerFile = `${process.cwd()}/swagger.json`;
 
-  let swaggerData = fs.readFileSync(swaggerFile, "utf8");
+  // let swaggerData = fs.readFileSync(swaggerFile, "utf8");
 
-  let swaggerJSON = JSON.parse(swaggerData);
+  // let swaggerJSON = JSON.parse(swaggerData);
+  app.use(
+    "/api-docs",
+    express.static(path.join(__dirname, "node_modules/swagger-ui-dist"))
+  );
+
+  app.use(
+    "/api-docs",
+    swaggerUi.serve,
+    swaggerUi.setup(swaggerDocument, {
+      customCssUrl:
+        "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.5/swagger-ui.min.css",
+    })
+  );
 
   app.get("/", (req, res) => {
     res.json({ message: "Welcome to the Task Management API" });
   });
-  app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerJSON));
 
   app.get("/api/tasks", taskController.getAllTasks);
   app.get("/api/tasks/:id", getTaskValidation, taskController.getTaskById);
