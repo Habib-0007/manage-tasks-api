@@ -21,8 +21,8 @@ export function createApp(): Application {
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
 
-  const swaggerDocs = swaggerJSDoc(swaggerDocument);
-  app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+  // const swaggerDocs = swaggerJSDoc(swaggerDocument);
+  app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
   app.get("/", (req, res) => {
     res.json({ message: "Welcome to the Task Management API" });
