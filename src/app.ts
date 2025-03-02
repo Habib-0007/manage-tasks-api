@@ -10,7 +10,7 @@ import {
   getTaskValidation,
   deleteTaskValidation,
 } from "./validation/task.validation";
-import swaggerJSDoc from "swagger-jsdoc";
+import fs from "fs";
 
 export function createApp(): Application {
   const app: Application = express();
