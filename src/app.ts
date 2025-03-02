@@ -19,14 +19,15 @@ export function createApp(): Application {
   app.use(cors({ origin: "*" }));
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
+  app.use(express.static("node_modules/swagger-ui-dist"));
 
-    let swaggerFile: string = `${process.cwd()}/swagger.json`;
+    let swaggerFile = `${process.cwd()}/swagger.json`;
 
-    let swaggerData: string = fs.readFileSync(swaggerFile, 'utf8');
+    let swaggerData = fs.readFileSync(swaggerFile, 'utf8');
 
     let swaggerJSON = JSON.parse(swaggerData);
 
-  app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerJSON, null, null, null));
+  app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerJSON));
 
   app.get("/", (req, res) => {
     res.json({ message: "Welcome to the Task Management API" });
