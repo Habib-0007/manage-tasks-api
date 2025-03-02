@@ -2,6 +2,7 @@ import express, { Application } from "express";
 import cors from "cors";
 import swaggerUi from "swagger-ui-express";
 import * as swaggerDocument from "../swagger.json";
+("swagger-jsdoc");
 import { errorHandler, notFoundHandler } from "./middlewares/error.middleware";
 import { TaskController } from "./controllers/task.controller";
 import {
@@ -10,16 +11,18 @@ import {
   getTaskValidation,
   deleteTaskValidation,
 } from "./validation/task.validation";
+import swaggerJSDoc from "swagger-jsdoc";
 
 export function createApp(): Application {
   const app: Application = express();
   const taskController = new TaskController();
 
-  app.use(cors());
+  app.use(cors({ origin: "*" }));
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
 
-  app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+  const swaggerDocs = swaggerJSDoc(swaggerDocument);
+  app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
   app.get("/", (req, res) => {
     res.json({ message: "Welcome to the Task Management API" });
