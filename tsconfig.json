@@ -11,6 +11,6 @@
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "swagger.json"],
   "exclude": ["node_modules", "**/*.spec.ts"]
 }

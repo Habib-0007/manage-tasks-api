@@ -25,7 +25,7 @@ export class TaskService {
   }
 
   async updateTask(id: number, taskData: UpdateTaskDTO) {
-    // Check if task exists
+   
     const task = await prisma.task.findUnique({
       where: { id },
     });
@@ -41,7 +41,6 @@ export class TaskService {
   }
 
   async deleteTask(id: number): Promise<boolean> {
-    // Check if task exists
     const task = await prisma.task.findUnique({
       where: { id },
     });
