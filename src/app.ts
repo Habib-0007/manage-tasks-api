@@ -1,8 +1,7 @@
 import express, { Application } from "express";
 import cors from "cors";
 import swaggerUi from "swagger-ui-express";
-import * as swaggerDocument from "../swagger.json";
-("swagger-jsdoc");
+// import * as swaggerDocument from "../swagger.json";
 import { errorHandler, notFoundHandler } from "./middlewares/error.middleware";
 import { TaskController } from "./controllers/task.controller";
 import {
@@ -21,8 +20,13 @@ export function createApp(): Application {
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
 
-  // const swaggerDocs = swaggerJSDoc(swaggerDocument);
-  app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+    let swaggerFile: string = `${process.cwd()}/swagger.json`;
+
+    let swaggerData: string = fs.readFileSync(swaggerFile, 'utf8');
+
+    let swaggerJSON = JSON.parse(swaggerData);
+
+  app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerJSON, null, null, null));
 
   app.get("/", (req, res) => {
     res.json({ message: "Welcome to the Task Management API" });
