@@ -11,6 +11,7 @@ import {
 } from "./validation/task.validation";
 import path from "path";
 import fs from "fs";
+import swaggerDocument from "../swagger.json";
 
 export function createApp(): Application {
   const app: Application = express();
@@ -20,15 +21,21 @@ export function createApp(): Application {
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
 
-  const swaggerPath = path.resolve(__dirname, "../swagger.json");
-  const swaggerDocument = JSON.parse(fs.readFileSync(swaggerPath, "utf8"));
+  app.use(express.static(path.join(__dirname, "../public")));
+
+  // const swaggerPath = path.resolve(__dirname, "../swagger.json");
+  // const swaggerDocument = JSON.parse(fs.readFileSync(swaggerPath, "utf8"));
+
+  const options = {
+    swaggerOptions: {
+      url: "/swagger.json",
+    },
+  };
 
   app.use(
     "/api-docs",
     swaggerUi.serve,
-    swaggerUi.setup(swaggerDocument, {
-      explorer: true,
-    })
+    swaggerUi.setup(swaggerDocument, options)
   );
 
   app.get("/", (req, res) => {
