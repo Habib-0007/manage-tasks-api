@@ -11,7 +11,7 @@ import {
 } from "./validation/task.validation";
 import path from "path";
 import fs from "fs";
-import swaggerDocument from "../swagger.json";
+import swaggerDocs from "../swagger.json";
 
 export function createApp(): Application {
   const app: Application = express();
@@ -39,10 +39,18 @@ export function createApp(): Application {
   );
 */
 
-  app.use('/docs', swaggerUi.serve, async (req: Request, res: Response) => {
-    return res.send(swaggerUi.generateHTML(await import('../../dist/swagger.json')));
-  });
-};
+app.use(
+    '/api-docs', 
+    express.static('node_modules/swagger-ui-dist/', {index: false}),
+    swaggerUi.serve, 
+    swaggerUi.setup(swaggerDocs)
+);
+
+app.use('/api-docs', express.static(path.join(__dirname, 'node_modules/swagger-ui-dist')));
+app.use('/api-docs/swagger-ui.css', express.static(path.join(__dirname, 'node_modules/swagger-ui-dist/swagger-ui.css')));
+app.use('/api-docs/swagger-ui-bundle.js', express.static(path.join(__dirname, 'node_modules/swagger-ui-dist/swagger-ui-bundle.js')));
+app.use('/api-docs/swagger-ui-standalone-preset.js', express.static(path.join(__dirname, 'node_modules/swagger-ui-dist/swagger-ui-standalone-preset.js')));
+app.use('/api-docs/swagger-ui-init.js', express.static(path.join(__dirname, 'node_modules/swagger-ui-dist/swagger-ui-init.js')));
 
   app.get("/", (req, res) => {
     res.json({ message: "Welcome to the Task Management API" });
