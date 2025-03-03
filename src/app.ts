@@ -23,10 +23,12 @@ export function createApp(): Application {
   app.use(express.static(path.join(__dirname, "../public")));
   app.use(express.static(path.join(__dirname, "node_modules/swagger-ui-dist")));
 
-  // Setup Swagger UI
-  app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+  app.use('/api-docs/static', express.static('node_modules/swagger-ui-dist'));
 
-  // API routes
+  app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec, {
+    customCssUrl: '/api-docs/static/swagger-ui.css'
+  }));
+
   app.get("/", (req, res) => {
     res.json({ message: "Welcome to the Task Management API" });
   });
