@@ -21,13 +21,10 @@ export function createApp(): Application {
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
   app.use(express.static(path.join(__dirname, "../public")));
+  app.use(express.static(path.join(__dirname, "node_modules/swagger-ui-dist")));
 
   // Setup Swagger UI
   app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-  app.use(
-    "/swagger-ui",
-    express.static(path.join(__dirname, "node_modules/swagger-ui-dist"))
-  );
 
   // API routes
   app.get("/", (req, res) => {
