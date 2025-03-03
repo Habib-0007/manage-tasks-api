@@ -1,4 +1,4 @@
-import express, { Application } from "express";
+import express, { Application, Request, Response, NextFunction } from "express";
 import cors from "cors";
 import swaggerUi from "swagger-ui-express";
 import { errorHandler, notFoundHandler } from "./middlewares/error.middleware";
@@ -27,10 +27,14 @@ export function createApp(): Application {
     "/api-docs",
     swaggerUi.serve,
     swaggerUi.setup(swaggerSpec, {
+      // customCssUrl:
+      //   "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.5/swagger-ui.min.css",
       customCssUrl:
-        "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.5/swagger-ui.min.css",
+        "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.18.2/swagger-ui.min.css",
+      // customJs:
+      //   "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.5/swagger-ui-bundle.min.js",
       customJs:
-        "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.5/swagger-ui-bundle.min.js",
+        "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.18.2/swagger-ui-bundle.min.js",
     })
   );
 
@@ -44,7 +48,7 @@ export function createApp(): Application {
   app.put("/api/tasks/:id", updateTaskValidation, taskController.updateTask);
   app.delete("/api/tasks/:id", deleteTaskValidation, taskController.deleteTask);
 
-  // Error handlers
+
   app.use(notFoundHandler);
   app.use(errorHandler);
 

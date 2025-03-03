@@ -104,9 +104,10 @@ const options = {
               items: {
                 type: "object",
                 properties: {
+                  type: { type: "string" },
                   value: { type: "string" },
                   msg: { type: "string" },
-                  param: { type: "string" },
+                  path: { type: "string" },
                   location: { type: "string" },
                 },
               },
@@ -171,7 +172,7 @@ const options = {
       },
     },
   },
-  apis: ["./src/routes/*.routes.js"],
+  apis: ["./src/routes/*.routes.ts"],
 };
 
 const swaggerSpec = swaggerJSDoc(options);

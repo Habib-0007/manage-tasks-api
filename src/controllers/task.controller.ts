@@ -32,7 +32,10 @@ export class TaskController {
       const task = await this.taskService.getTaskById(id);
 
       if (!task) {
-        res.status(404).json({ error: "Task not found" });
+        res.status(404).json({
+          error: "Task not found",
+          message: "There is no task with this id",
+        });
         return;
       }
 
@@ -82,7 +85,10 @@ export class TaskController {
       const updatedTask = await this.taskService.updateTask(id, taskData);
 
       if (!updatedTask) {
-        res.status(404).json({ error: "Task not found" });
+        res.status(404).json({
+          error: "Task not found",
+          message: "There is no task with this id",
+        });
         return;
       }
 
@@ -105,11 +111,14 @@ export class TaskController {
       const isDeleted = await this.taskService.deleteTask(id);
 
       if (!isDeleted) {
-        res.status(404).json({ error: "Task not found" });
+        res.status(404).json({
+          error: "Task not found",
+          message: "There is no task with this id",
+        });
         return;
       }
 
-      res.status(204).send();
+      res.status(204).send("Task Successfully deleted");
     } catch (error) {
       console.error(`Error deleting task with ID ${req.params.id}:`, error);
       res.status(500).json({ error: "Failed to delete task" });
