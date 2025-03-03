@@ -41,7 +41,7 @@ const CSS_URL = 'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.18.2/swagge
   );
 */
 
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs, ( customCssUrl: CSS_URL }));
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs, { customCssUrl: CSS_URL }));
 
   app.get("/", (req, res) => {
     res.json({ message: "Welcome to the Task Management API" });
