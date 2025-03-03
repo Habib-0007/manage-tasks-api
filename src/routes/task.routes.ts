@@ -7,6 +7,30 @@ const router = Router();
 const { createTask, updateTask, getAllTasks, deleteTask } =
   new TaskController();
 
+/**
+ * @swagger
+ * /api/tasks:
+ *   post:
+ *     tags: [Tasks]
+ *     summary: Create a new task
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/CreateTaskInput'
+ *     responses:
+ *       201:
+ *         description: Task created
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Task'
+ *       400:
+ *         $ref: '#/components/responses/ValidationError'
+ *       500:
+ *         $ref: '#/components/responses/ServerError'
+ */
 router.post(
   "/",
   [
@@ -19,6 +43,24 @@ router.post(
   createTask
 );
 
+/**
+ * @swagger
+ * /api/tasks:
+ *   get:
+ *     tags: [Tasks]
+ *     summary: Retrieve all tasks
+ *     responses:
+ *       200:
+ *         description: A list of tasks
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Task'
+ *       500:
+ *         $ref: '#/components/responses/ServerError'
+ */
 router.get("/", getAllTasks);
 router.put(
   "/:id",

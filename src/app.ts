@@ -10,7 +10,8 @@ import {
   deleteTaskValidation,
 } from "./validation/task.validation";
 import path from "path";
-import { swaggerDocs } from "./utils/swagger";
+// import { swaggerDocs } from "./utils/swagger";
+import { swaggerSpec } from "./config/swagger.config";
 
 export function createApp(): Application {
   const app: Application = express();
@@ -22,7 +23,7 @@ export function createApp(): Application {
   app.use(express.static(path.join(__dirname, "../public")));
 
   // Setup Swagger UI
-  app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+  app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
   // API routes
   app.get("/", (req, res) => {
