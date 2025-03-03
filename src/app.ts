@@ -12,10 +12,13 @@ import {
 import path from "path";
 // import { swaggerDocs } from "./utils/swagger";
 import { swaggerSpec } from "./config/swagger.config";
+const swaggerDocs = require('./swagger.json');
 
 export function createApp(): Application {
   const app: Application = express();
   const taskController = new TaskController();
+
+const CSS_URL = 'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.1.0/swagger-ui.min.css';
 
   app.use(cors({ origin: "*" }));
   app.use(express.json());
@@ -23,7 +26,7 @@ export function createApp(): Application {
   app.use(express.static(path.join(__dirname, "../public")));
   app.use(express.static(path.join(__dirname, "node_modules/swagger-ui-dist")));
 
-  app.use(
+  /* app.use(
     "/api-docs",
     swaggerUi.serve,
     swaggerUi.setup(swaggerSpec, {
@@ -37,6 +40,9 @@ export function createApp(): Application {
 //"https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.18.2/swagger-ui-bundle.min.js",
     })
   );
+*/
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs, { customCssUrl: CSS_URL }));
 
   app.get("/", (req, res) => {
     res.json({ message: "Welcome to the Task Management API" });
