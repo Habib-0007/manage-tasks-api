@@ -32,11 +32,17 @@ export function createApp(): Application {
     },
   };
 
-  app.use(
+ /* app.use(
     "/api-docs",
     swaggerUi.serve,
     swaggerUi.setup(swaggerDocument, options)
   );
+*/
+
+  app.use('/docs', swaggerUi.serve, async (req: Request, res: Response) => {
+    return res.send(swaggerUi.generateHTML(await import('../../dist/swagger.json')));
+  });
+};
 
   app.get("/", (req, res) => {
     res.json({ message: "Welcome to the Task Management API" });
