@@ -12,7 +12,7 @@ import {
 import path from "path";
 // import { swaggerDocs } from "./utils/swagger";
 import { swaggerSpec } from "./config/swagger.config";
-const swaggerDocs = require('./swagger.json');
+const swaggerDocs = require('../swagger.json');
 
 export function createApp(): Application {
   const app: Application = express();
