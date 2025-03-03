@@ -85,6 +85,7 @@ NODE_ENV=your-node-environment
 | GET    | `/api/tasks/:id` | Get a task by ID    |
 | PUT    | `/api/tasks/:id` | Update a task by ID    |
 | DELETE    | `/api/tasks/:id` | Delete a task by ID     |
+| GET    | `/api-docs` | API Documentation (Swagger)    |
 
 ## Contributing
 
