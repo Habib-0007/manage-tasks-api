@@ -17,7 +17,7 @@ export function createApp(): Application {
   const app: Application = express();
   const taskController = new TaskController();
 
-const CSS_URL = 'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.1.0/swagger-ui.min.css';
+const CSS_URL = 'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.18.2/swagger-ui.min.css';
 
   app.use(cors({ origin: "*" }));
   app.use(express.json());
@@ -41,7 +41,7 @@ const CSS_URL = 'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.1.0/swagger
   );
 */
 
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs, ( customCssUrl: CSS_URL }));
 
   app.get("/", (req, res) => {
     res.json({ message: "Welcome to the Task Management API" });
