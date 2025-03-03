@@ -10,10 +10,8 @@ import {
   deleteTaskValidation,
 } from "./validation/task.validation";
 import path from "path";
-// import { swaggerDocs } from "./utils/swagger";
-// import { swaggerSpec } from "./config/swagger.config";
-// const swaggerDocs = require('../swagger.json');
-const swaggerSpec = require('./config/swagger.config');
+const swaggerDocs = require('../swagger.json');
+// const swaggerSpec = require('./config/swagger.config');
 
 export function createApp(): Application {
   const app: Application = express();
@@ -43,7 +41,7 @@ const CSS_URL = 'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.1.0/swagger
   );
 */
 
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, { customCssUrl: CSS_URL }));
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs, { customCssUrl: CSS_URL }));
 
   app.get("/", (req, res) => {
     res.json({ message: "Welcome to the Task Management API" });
