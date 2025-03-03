@@ -11,8 +11,9 @@ import {
 } from "./validation/task.validation";
 import path from "path";
 // import { swaggerDocs } from "./utils/swagger";
-import { swaggerSpec } from "./config/swagger.config";
-const swaggerDocs = require('../swagger.json');
+// import { swaggerSpec } from "./config/swagger.config";
+// const swaggerDocs = require('../swagger.json');
+const swaggerSpec = require('./config/swagger.config');
 
 export function createApp(): Application {
   const app: Application = express();
