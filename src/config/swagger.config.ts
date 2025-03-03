@@ -172,7 +172,7 @@ const options = {
       },
     },
   },
-  apis: ["./dist/routes/task.routes.js"],
+  apis: ["./dist/routes/*.routes.js"],
 };
 
 const swaggerSpec = swaggerJSDoc(options);
